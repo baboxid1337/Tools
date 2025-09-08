@@ -1,8 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-# === Protect.sh v3 - Baboxid1337 ===
-# Tools proteksi file & folder dengan auto-backup dan unlock
-# Dibuat oleh Baboxid1337
+# === Protect.sh v3.1 - Baboxid1337 ===
+# Kompatibel dengan bash, sh, dash
 
 BACKUP_DIR="$HOME/.protected_files"
 LOG_FILE="$HOME/.protect.log"
@@ -14,8 +13,9 @@ log_action() {
 }
 
 proteksi_file() {
-    read -p "Masukkan path file: " file
-    if [[ ! -f "$file" ]]; then
+    echo -n "Masukkan path file: "
+    read file
+    if [ ! -f "$file" ]; then
         echo "[ERROR] File tidak ditemukan!"
         return
     fi
@@ -26,8 +26,9 @@ proteksi_file() {
 }
 
 unlock_file() {
-    read -p "Masukkan path file: " file
-    if [[ ! -f "$file" ]]; then
+    echo -n "Masukkan path file: "
+    read file
+    if [ ! -f "$file" ]; then
         echo "[ERROR] File tidak ditemukan!"
         return
     fi
@@ -37,8 +38,9 @@ unlock_file() {
 }
 
 proteksi_folder() {
-    read -p "Masukkan path folder: " folder
-    if [[ ! -d "$folder" ]]; then
+    echo -n "Masukkan path folder: "
+    read folder
+    if [ ! -d "$folder" ]; then
         echo "[ERROR] Folder tidak ditemukan!"
         return
     fi
@@ -48,12 +50,14 @@ proteksi_folder() {
 }
 
 restore_file() {
-    read -p "Masukkan nama file yang mau direstore: " filename
-    if [[ ! -f "$BACKUP_DIR/$filename" ]]; then
+    echo -n "Masukkan nama file yang mau direstore: "
+    read filename
+    if [ ! -f "$BACKUP_DIR/$filename" ]; then
         echo "[ERROR] File backup tidak ditemukan!"
         return
     fi
-    read -p "Masukkan path tujuan restore: " target
+    echo -n "Masukkan path tujuan restore: "
+    read target
     cp "$BACKUP_DIR/$filename" "$target"
     chmod 644 "$target/$filename"
     log_action "Restore file: $filename ke $target"
@@ -67,14 +71,15 @@ list_protected() {
 
 while true; do
     echo ""
-    echo "=== Protect.sh v3 - Baboxid1337 ==="
+    echo "=== Protect.sh v3.1 - Baboxid1337 ==="
     echo "1. Proteksi file"
     echo "2. Unlock file"
     echo "3. Proteksi folder"
     echo "4. Restore file dari backup"
     echo "5. List file yang diproteksi"
     echo "6. Keluar"
-    read -p "Pilih menu: " menu
+    echo -n "Pilih menu: "
+    read menu
 
     case $menu in
         1) proteksi_file ;;
